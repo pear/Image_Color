@@ -329,7 +329,7 @@ class Image_Color
         */
         
         // Loop through all the degrees between the colors
-        for ( $x = 1; $x < $degrees; $x++ )
+        for ( $x = 0; $x <= $degrees; $x++ )
         {
             $col[0] = $red_steps * $x;
             $col[1] = $green_steps * $x;
