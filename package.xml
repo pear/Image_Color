@@ -16,19 +16,21 @@
       <name>Ulf Wendel</name>
       <email>ulf.wendel@phpdoc.de</email>
     </maintainer>
+    <maintainer>
+      <user>sebastian</user>
+      <role>developer</role>
+      <name>Sebastian Bergmann</name>
+      <email>sb@sebastian-bergmann.de</email>
+    </maintainer>
   </maintainers>
   <release>
-    <version>0.3</version>
-    <date>2002-04-08</date>
+    <version>0.4</version>
+    <date>200X-XX-XX</date>
     <state>stable</state>
     <notes>
-      <![CDATA[
-      * First independent PEAR release.
-
-      * Renamed RGB(.php) to Color(.php).
-
-      * Merged in functionality from Experimental/Color_Helper.
-      ]]>
+<![CDATA[
+* Made namedColor2RGB() method static.
+]]>
     </notes>
     <filelist>
       <dir name="/" baseinstalldir="Image">
@@ -41,12 +43,25 @@
   </release>
   <changelog>
     <release>
+      <version>0.3</version>
+      <date>2002-04-08</date>
+      <notes>
+<![CDATA[
+* First independent PEAR release.
+
+* Renamed RGB(.php) to Color(.php).
+
+* Merged in functionality from Experimental/Color_Helper.
+]]>
+      </notes>
+    </release>
+    <release>
       <version>0.2</version>
       <date>2002-03-14</date>
       <notes>
-      <![CDATA[
-      Added support for HSV2RGB and HSV2HEX - Thanks to Jurgen Schwietering
-      ]]>
+<![CDATA[
+Added support for HSV2RGB and HSV2HEX - Thanks to Jurgen Schwietering
+]]>
       </notes>
     </release>
   </changelog>
