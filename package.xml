@@ -6,22 +6,48 @@
   <maintainers>
     <maintainer>
       <user>jasonlotito</user>
+      <role>lead</role>
       <name>Jason Lotito</name>
       <email>jason@lehighweb.com</email>
     </maintainer>
+    <maintainer>
+      <user>uw</user>
+      <role>developer</role>
+      <name>Ulf Wendel</name>
+      <email>ulf.wendel@phpdoc.de</email>
+    </maintainer>
   </maintainers>
   <release>
-    <version>0.2</version>
-    <date>2002-03-14</date>
+    <version>0.3</version>
+    <date>2002-04-08</date>
+    <state>stable</state>
     <notes>
-    <![CDATA[
-        Added support for HSV2RGB and HSV2HEX - Thanks to Jurgen Schwietering
-    ]]>
-   </notes>
+      <![CDATA[
+      * First independent PEAR release.
+
+      * Renamed RGB(.php) to Color(.php).
+
+      * Merged in functionality from Experimental/Color_Helper.
+      ]]>
+    </notes>
     <filelist>
       <dir name="/" baseinstalldir="Image">
-        <file role="php">RGB.php</file>
+        <file role="php">Color.php</file>
       </dir>
     </filelist>
+    <deps>
+      <dep type="ext" rel="has">gd</dep>
+    </deps>
   </release>
+  <changelog>
+    <release>
+      <version>0.2</version>
+      <date>2002-03-14</date>
+      <notes>
+      <![CDATA[
+      Added support for HSV2RGB and HSV2HEX - Thanks to Jurgen Schwietering
+      ]]>
+      </notes>
+    </release>
+  </changelog>
 </package>
