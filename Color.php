@@ -329,7 +329,7 @@ class Image_Color
         */
         
         // Loop through all the degrees between the colors
-        for ( $x = 0; $x < $degrees; $x++ )
+        for ( $x = 1; $x < $degrees; $x++ )
         {
             $col[0] = $red_steps * $x;
             $col[1] = $green_steps * $x;
@@ -430,7 +430,7 @@ class Image_Color
     */
     function getTextColor ( $color, $light='FFFFFF', $dark='000000' )
     {
-        $color = Color::_splitColor($color);
+        $color = Image_Color::_splitColor($color);
         if ( $color[1] > hexdec('66') )
         {
             return $dark;
@@ -450,8 +450,8 @@ class Image_Color
     */
     function _setColors ( $col1, $col2 )
     {
-        $this->color1 = Color::_splitColor($col1);
-        $this->color2 = Color::_splitColor($col2);
+        $this->color1 = Image_Color::_splitColor($col1);
+        $this->color2 = Image_Color::_splitColor($col2);
     }
     
     /**
@@ -496,7 +496,7 @@ class Image_Color
     */
     function rgb2hex ( $color )
     {
-        return Color::_returnColor( $color );
+        return Image_Color::_returnColor( $color );
     }
     
     /**
@@ -512,7 +512,7 @@ class Image_Color
     */
     function hex2rgb ( $hex )
     {
-        $return = Color::_splitColor( $hex );
+        $return = Image_Color::_splitColor( $hex );
         $return['hex'] = $hex;
         return $return;
     }
@@ -530,7 +530,7 @@ class Image_Color
     */
     function hsv2rgb ( $h, $s, $v )
     {
-        return Color::hex2rgb(Color::hsv2hex($h, $s, $v));
+        return Image_Color::hex2rgb(Image_Color::hsv2hex($h, $s, $v));
     }
     
     /**
