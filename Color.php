@@ -723,4 +723,4 @@ class Image_Color
 * c-basic-offset: 4
 * End:
 */
-?> 
+?>
