@@ -17,12 +17,6 @@
       <name>Ulf Wendel</name>
       <email>ulf.wendel@phpdoc.de</email>
     </maintainer>
-    <maintainer>
-      <user>sebastian</user>
-      <role>developer</role>
-      <name>Sebastian Bergmann</name>
-      <email>sb@sebastian-bergmann.de</email>
-    </maintainer>
   </maintainers>
   <license>PHP License</license>
   <release>
