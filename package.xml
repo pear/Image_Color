@@ -32,7 +32,7 @@
     </notes>
     <filelist>
       <dir name="/" baseinstalldir="Image">
-        <file role="php">Color.php</file>
+        <file role="php" name="Color.php"/>
       </dir>
     </filelist>
     <deps>
