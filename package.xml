@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE package SYSTEM "../package.dtd">
+<package version="1.0">
+  <name>Image_Color</name>
+  <summary>Manage and handles color data and conversions.</summary>
+  <maintainers>
+    <maintainer>
+      <user>jasonlotito</user>
+      <name>Jason Lotito</name>
+      <email>jason@lehighweb.com</email>
+    </maintainer>
+  </maintainers>
+  <release>
+    <version>0.1</version>
+    <date>2002-03-08</date>
+    <notes>
+    <![CDATA[
+        Initial release.
+    ]]>
+   </notes>
+    <filelist>
+      <dir name="/" baseinstalldir="Image">
+        <file role="php">RGB.php</file>
+      </dir>
+    </filelist>
+  </release>
+</package>
