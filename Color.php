@@ -465,6 +465,7 @@ class Image_Color
     */
     function _splitColor ( $color )
     {
+        $color = str_replace('#', '', $color);
         $c[] = hexdec( substr( $color, 0, 2 ) );
         $c[] = hexdec( substr( $color, 2, 2 ) );
         $c[] = hexdec( substr( $color, 4, 2 ) );
