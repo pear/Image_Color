@@ -46,8 +46,11 @@
 *   anyone really using it, and so it hasn't been tested completely.  The more
 *   input I get back on it, the closer it goes to a 1.0 release.
 *
-*   @version    0.1
+*   @version    0.2
 *   @author     Jason Lotito <jason@lehighweb.com>
+*
+*   Changelog
+*   3/14/2002 - Add support for HSV2RGB and HSV2HEX - Thanks to Jurgen Schwietering
 */
 class Color_RGB
 {
@@ -366,6 +369,90 @@ class Color_RGB
         $return = Color::_splitColor( $hex );
         $return['hex'] = $hex;
         return $return;
+    }
+    
+    /**
+    *   hsv2rgb
+    *   Converts a HSV (Hue, Saturation, Brightness) value to RGB.
+    *
+    *   @access public
+    *   @param  integer $h  Hue
+    *   @param  integer $s  Saturation
+    *   @param  integer $v  Brightness
+    *   @return string      The RGB value.
+    *   @author    Jason Lotito <jason@lehighweb.com>
+    */
+    function hsv2rgb ( $h, $s, $v )
+    {
+        return Color::hex2rgb(Color::hsv2hex($h, $s, $v));
+    }
+    
+    /**
+    *   hsv2hex
+    *   Converts a HSV (Hue, Saturation, Brightness) value to Hexidecimal.
+    *
+    *   Originally written by @author.  Integrated into Class by Jason Lotito.
+    *
+    *   @access public
+    *   @param  integer $h  Hue
+    *   @param  integer $s  Saturation
+    *   @param  integer $v  Brightness
+    *   @return string      The hex value.
+    *	@author	@author	Jurgen Schwietering <jurgen@schwietering.com>
+    */
+    function hsv2hex ( $h, $s, $v )
+    {
+        $s /= 256.0;
+        $v /= 256.0;
+        if ( $s == 0.0 )
+        {
+            $r = $g = $b = $v;
+            return "";
+        } else {
+            $h = $h/256.0*6.0;
+            $i = floor($h);
+            $f = $h - $i;
+            
+            $v *= 256.0;
+            $p = (integer)($v * (1.0 - $s));
+            $q = (integer)($v * (1.0 - $s * $f));
+            $t = (integer)($v * (1.0 - $s * (1.0 - $f)));
+            switch( $i )
+            {
+                case 0:  
+                    $r = $v; 
+                    $g = $t; 
+                    $b = $p; 
+                    break;
+                case 1:  
+                    $r = $q; 
+                    $g = $v; 
+                    $b = $p; 
+                    break;
+                case 2:  
+                    $r = $p; 
+                    $g = $v; 
+                    $b = $t; 
+                    break;
+                case 3:  
+                    $r = $p; 
+                    $g = $q; 
+                    $b = $v; 
+                    break;
+                case 4:  
+                    $r = $t; 
+                    $g = $p; 
+                    $b = $v; 
+                    break;
+                default: 
+                    $r = $v; 
+                    $g = $p; 
+                    $b = $q; 
+                    break;
+            }
+        }
+        $newcolor = array($r, $g, $b);
+        return $this->_returnColor($newcolor);
     }
 }
 
