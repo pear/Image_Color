@@ -315,11 +315,11 @@ class Image_Color
         */
         
         // RED
-        $red_steps   = ( $this->color2[0] - $this->color[0] ) / $degrees;
+        $red_steps   = ( $this->color2[0] - $this->color1[0] ) / $degrees;
         // GREEN
-        $green_steps = ( $this->color2[1] - $this->color[1] ) / $degrees;
+        $green_steps = ( $this->color2[1] - $this->color1[1] ) / $degrees;
         // BLUE
-        $blue_steps  = ( $this->color2[2] - $this->color[2] ) / $degrees;
+        $blue_steps  = ( $this->color2[2] - $this->color1[2] ) / $degrees;
         
         $allcolors = array();
         $x = 0;
@@ -338,7 +338,7 @@ class Image_Color
             // Loop through each R, G, and B
             for ( $i = 0; $i < 3; $i++ )
             {
-                $partcolor = $color1[$i] + $col[$i];
+                $partcolor = $this->color1[$i] + $col[$i];
                 // If the color is less than 256
                 if (  $partcolor < 256 )
                 {
