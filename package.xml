@@ -11,11 +11,11 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>0.1</version>
-    <date>2002-03-08</date>
+    <version>0.2</version>
+    <date>2002-03-14</date>
     <notes>
     <![CDATA[
-        Initial release.
+        Added support for HSV2RGB and HSV2HEX - Thanks to Jurgen Schwietering
     ]]>
    </notes>
     <filelist>
