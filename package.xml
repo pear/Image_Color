@@ -17,20 +17,21 @@
       <name>Ulf Wendel</name>
       <email>ulf.wendel@phpdoc.de</email>
     </maintainer>
+    <maintainer>
+      <user>sebastian</user>
+      <role>developer</role>
+      <name>Sebastian Bergmann</name>
+      <email>sb@sebastian-bergmann.de</email>
+    </maintainer>
   </maintainers>
   <license>PHP License</license>
   <release>
-    <version>1.0.0</version>
-    <date>2004-04-17</date>
+    <version>1.0.1</version>
+    <date>2004-05-25</date>
     <state>stable</state>
     <notes>
 <![CDATA[
-+ Added color2RGB() method.
-
-  (Contribution by Laurent Laville <pear@laurent-laville.org>)
-
-* allocateColor() now works with both color names and
-  hex color codes.
+* Removed newline at end of file.
 ]]>
     </notes>
     <filelist>
@@ -43,6 +44,20 @@
     </deps>
   </release>
   <changelog>
+    <release>
+      <version>1.0.0</version>
+      <date>2004-04-17</date>
+      <notes>
+<![CDATA[
++ Added color2RGB() method.
+
+  (Contribution by Laurent Laville <pear@laurent-laville.org>)
+
+* allocateColor() now works with both color names and
+  hex color codes.
+]]>
+      </notes>
+    </release>
     <release>
       <version>0.4</version>
       <date>2003-01-02</date>
