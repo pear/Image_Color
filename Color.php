@@ -645,14 +645,14 @@ class Image_Color
     }
 
     /**
-    * Returns the RGB integer values of a color specified by a "percentage string" like "%50,%20,%100". 
+    * Returns the RGB integer values of a color specified by a "percentage string" like "50%,20%,100%". 
     *
     * @param    string
     * @return   array   [int red, int green, int blue]
     * @access   public
     */
     function percentageColor2RGB($color) {
-        // split the string %50,%20,%100 by ,
+        // split the string 50%,20%,100% by ,
         $color = explode(",", $color);        
                 
         foreach ($color as $k => $v) {
@@ -726,3 +726,4 @@ class Image_Color
 * End:
 */
 ?>
+ 
