@@ -3,6 +3,7 @@
 <package version="1.0">
   <name>Image_Color</name>
   <summary>Manage and handles color data and conversions.</summary>
+  <description>Manage and handles color data and conversions.</description>
   <maintainers>
     <maintainer>
       <user>jasonlotito</user>
@@ -23,9 +24,10 @@
       <email>sb@sebastian-bergmann.de</email>
     </maintainer>
   </maintainers>
+  <license>PHP License</license>
   <release>
     <version>0.4</version>
-    <date>200X-XX-XX</date>
+    <date>2003-01-02</date>
     <state>stable</state>
     <notes>
 <![CDATA[
