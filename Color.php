@@ -15,6 +15,7 @@
 // | Authors: Jason Lotito <jason@lehighweb.com>                          |
 // |          Ulf Wendel <ulf.wendel@phpdoc.de>                           |
 // |          Sebastian Bergmann <sb@sebastian-bergmann.de>               |
+// |          Laurent Laville <pear@laurent-laville.org>                  |
 // +----------------------------------------------------------------------+
 //
 // $Id$
@@ -469,10 +470,28 @@ class Image_Color
     * @access   public
     */  
     function allocateColor(&$img, $color) {
-        $color = $this->color2RGB($color);
+        $color = Image_Color::color2RGB($color);
 
         return ImageColorAllocate($img, $color[0], $color[1], $color[2]);
     }                 
+
+    /**
+    * @access   public
+    * @static
+    * @author   Laurent Laville <pear@laurent-laville.org>
+    */
+    function color2RGB($color)
+    {
+        $c = array();
+
+        if ($color{0} == '#') {
+            $c = Image_Color::hex2rgb($color);
+        } else {
+             $c = Image_Color::namedColor2RGB($color);
+        }
+
+        return $c;
+    }
 
     /**
     * Returns the RGB interger values of a named color, [0,0,0] if unknown.
