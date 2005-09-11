@@ -6,6 +6,12 @@
   <description>Manage and handles color data and conversions.</description>
   <maintainers>
     <maintainer>
+      <user>drewish</user>
+      <role>lead</role>
+      <name>Andrew Morton</name>
+      <email>drewish@php.net</email>
+    </maintainer>
+    <maintainer>
       <user>jasonlotito</user>
       <role>lead</role>
       <name>Jason Lotito</name>
