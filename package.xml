@@ -26,17 +26,33 @@
   </maintainers>
   <license>PHP License</license>
   <release>
-    <version>1.0.1</version>
-    <date>2004-05-25</date>
-    <state>stable</state>
+    <version>1.0.2</version>
+    <state>beta</state>
+    <date>2005-09-11</date>
     <notes>
-<![CDATA[
-* Removed newline at end of file.
-]]>
+* FIXED: percentageColor2RGB() was dropping first character of each number
+  instead of the percent sign at the end.
+* FIXED: mixColors() and percentageColor2RGB() weren't rounding the values
+  correctly. 50% of 255 is 127.5 and should round to 128 instead of 127.
+* FIXED: setColors(). If the second parameter was omitted it would take on a
+  random-ish value. I changed the implementation of so that colors are only set
+  when they're provided.
+* FIXED: _makeWebSafe() was rounding values incorrectly. Significantly
+  simplified the implementation in the process.
+* Removed the private, unused Image_Color::$websafe member.
+* Marked Image_Color::$color1 and $color2 as public. It made no sense that they
+  were private considering that if you called changeLightness() the only way to
+  find the result was using $color1 and $color2.
+* Deprecated the _returnColor() function. All it was doing was converting RGB
+  arrays to hex strings. The more aptly named rgb2hex() was calling
+  _returnColor() which made no sense. _returnColor() now calls rgb2hex() and
+  will probably disappear after the next release.
+* Made major improvements to the comments and documentation and corrected
+  several violations of the PEAR coding standards.
     </notes>
     <filelist>
       <dir name="/" baseinstalldir="Image">
-        <file role="php" name="Color.php"/>
+        <file role="php" name="Color.php" />
       </dir>
     </filelist>
     <deps>
@@ -44,6 +60,16 @@
     </deps>
   </release>
   <changelog>
+    <release>
+      <version>1.0.1</version>
+      <date>2004-05-25</date>
+      <state>stable</state>
+      <notes>
+<![CDATA[
+* Removed newline at end of file.
+]]>
+      </notes>
+    </release>
     <release>
       <version>1.0.0</version>
       <date>2004-04-17</date>
