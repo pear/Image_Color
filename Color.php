@@ -1,81 +1,88 @@
 <?php
-// +----------------------------------------------------------------------+
-// | PHP Version 4                                                        |
-// +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2003 The PHP Group                                |
-// +----------------------------------------------------------------------+
-// | This source file is subject to version 2.02 of the PHP license,      |
-// | that is bundled with this package in the file LICENSE, and is        |
-// | available at through the world-wide-web at                           |
-// | http://www.php.net/license/2_02.txt.                                 |
-// | If you did not receive a copy of the PHP license and are unable to   |
-// | obtain it through the world-wide-web, please send a note to          |
-// | license@php.net so we can mail you a copy immediately.               |
-// +----------------------------------------------------------------------+
-// | Authors: Jason Lotito <jason@lehighweb.com>                          |
-// |          Ulf Wendel <ulf.wendel@phpdoc.de>                           |
-// |          Sebastian Bergmann <sb@sebastian-bergmann.de>               |
-// |          Laurent Laville <pear@laurent-laville.org>                  |
-// +----------------------------------------------------------------------+
-//
-// $Id$
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * Image_Color Handles color conversion and mixing.
+ * Color.php is the implementation of Image_Color.
  *
- * The class is really simple to use, does its job fairly well, and is rather
- * quick.
+ * PHP versions 4 and 5
  *
- * If someone has ideas or thoughts on this, please let me know.  I would like
- * expand it to handling image colors, as well as converting to CMYK, and even
- * the dreaded Pantone(TM) colors!  If someone knows of converting algo's or
- * know of anything that might be of interest to me, let me know =). about it
- * to.
+ * LICENSE: This source file is subject to version 3.0 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
  *
- * Also, one more thing - Yes, I know, I will be try to get off the setColors()
- * 2 color limitation, but since this script started out as a simple function
- * that could _mix_ to colors together, it just kept going like that.
+ * @category    Image
+ * @package     Image_Color
+ * @author      Jason Lotito <jason@lehighweb.com>
+ * @author      Andrew Morton <drewish@katherinehouse.com>
+ * @copyright   2003-2005 The PHP Group
+ * @license     http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @version     CVS: $Id$
+ * @link        http://pear.php.net/package/Image_Color
+ */
+
+/**
+ * Image_Color handles color conversion and mixing.
  *
- * @version 1.0.1
- * @author  Jason Lotito <jason@lehighweb.com>
+ * The class is quick, simple to use, and does its job fairly well but it's got
+ * some code smells:
+ *  - Call setColors() for some functions but not others.
+ *  - Different functions expect different color formats. setColors() only
+ *    accepts hex while allocateColor() will accept named or hex (provided the
+ *    hex ones start with the # character).
+ *  - Some conversions go in only one direction, ie HSV->RGB but no RGB->HSV.
+ * I'm going to try to straighten out some of this but I'll be hard to do so
+ * without breaking backwards compatibility.
+ *
+ * @category    Image
+ * @package     Image_Color
+ * @author      Jason Lotito <jason@lehighweb.com>
+ * @author      Andrew Morton <drewish@katherinehouse.com>
+ * @copyright   2003-2005 The PHP Group
+ * @license     http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @version     Release: 0.1.2
+ * @link        http://pear.php.net/package/Image_Color
  */
 class Image_Color
 {
     /**
      * First color that the class handles for ranges and mixes.
-     * @access  private
      * @var     array
+     * @access  public
      * @see     setColors()
      */
     var $color1 = array();
 
     /**
      * Second color that the class handles for ranges and mixes.
-     * @access  private
      * @var     array
+     * @access  public
      * @see     setColors()
      */
     var $color2 = array();
 
     /**
-     * Boolean value for determining whether colors outputted should be websafe
-     * or not.
+     * Boolean value for determining whether colors outputted should be limited
+     * to the web safe pallet or not.
      *
-     * @access  private
      * @var     boolean
+     * @access  private
      * @see     setWebSafe()
      */
     var $_websafeb = false;
 
     /**
-     * Mix two colors together by finding their average.
+     * Mix two colors together by finding their average. If the colors are not
+     * passed as parameters, the class's colors will be mixed instead.
      *
-     * @access  public
      * @param   string  $col1 The first color you want to mix
      * @param   string  $col2 The second color you want to mix
-     * @result  string  The mixed color.
+     * @return  string  The mixed color.
+     * @access  public
      * @author  Jason Lotito <jason@lehighweb.com>
-     * @uses    _setColors() to assign the colors if any are passed to the class
+     * @uses    _setColors() to assign the colors if any are passed to the
+     *                  class.
      */
     function mixColors($col1 = false, $col2 = false)
     {
@@ -83,12 +90,11 @@ class Image_Color
             $this->_setColors($col1, $col2);
         }
 
-        // RED
-        $color3[0] = ($this->color1[0] + $this->color2[0]) / 2;
-        // GREEN
-        $color3[1] = ($this->color1[1] + $this->color2[1]) / 2;
-        // BLUE
-        $color3[2] = ($this->color1[2] + $this->color2[2]) / 2;
+        // after finding the average, it will be a float. add 0.5 and then
+        // cast to an integer to properly round it to an integer.
+        $color3[0] = (int) ((($this->color1[0] + $this->color2[0]) / 2) + 0.5);
+        $color3[1] = (int) ((($this->color1[1] + $this->color2[1]) / 2) + 0.5);
+        $color3[2] = (int) ((($this->color1[2] + $this->color2[2]) / 2) + 0.5);
 
         if ($this->_websafeb) {
             array_walk($color3, '_makeWebSafe');
@@ -99,11 +105,12 @@ class Image_Color
 
     /**
      * Determines whether colors the returned by this class will be rounded to
-     * the nearst websafe value.
+     * the nearest web safe value.
      *
-     * @access  public
      * @param   boolean $bool Indicates if colors should be limited to the
      *          websafe pallet.
+     * @return  void
+     * @access  public
      * @author  Jason Lotito <jason@lehighweb.com>
      */
     function setWebSafe($bool = true)
@@ -114,9 +121,10 @@ class Image_Color
     /**
      * Set the two colors this class uses for mixing and ranges.
      *
-     * @access  public
      * @param   string  $col1 The first color in hex format
      * @param   string  $col2 The second color in hex format
+     * @return  void
+     * @access  public
      * @author  Jason Lotito <jason@lehighweb.com>
      */
     function setColors($col1, $col2)
@@ -127,11 +135,11 @@ class Image_Color
     /**
      * Get the range of colors between the class's two colors, given a degree.
      *
-     * @access  public
-     * @param   string  $degrees How large a 'step' we should take between the
+     * @param   integer $degrees How large a 'step' we should take between the
      *          colors.
      * @return  array   Returns an array of hex strings, one element for each
      *          color.
+     * @access  public
      * @author  Jason Lotito <jason@lehighweb.com>
      * @todo    Allow for degrees for individual parts of the colors.
      */
@@ -141,14 +149,12 @@ class Image_Color
             $degrees = 1;
         }
 
-        // The degrees give us how much we should advance each color at each phase
-        // of the loop.  This way, the advance is equal throughout all the colors.
+        // The degrees give us how much we should advance each color at each
+        // phase of the loop.  This way, the advance is equal throughout all
+        // the colors.
 
-        // RED
         $red_steps   = ($this->color2[0] - $this->color1[0]) / $degrees;
-        // GREEN
         $green_steps = ($this->color2[1] - $this->color1[1]) / $degrees;
-        // BLUE
         $blue_steps  = ($this->color2[2] - $this->color1[2]) / $degrees;
 
         $allcolors = array();
@@ -191,12 +197,15 @@ class Image_Color
     }
 
     /**
-     * Change the lightness of the classes two colors.
+     * Change the lightness of the class's two colors.
      *
-     * @access  public
      * @param   integer     $degree The degree of the change. Positive values
      *          lighten the color while negative values will darken it.
+     * @return  void
+     * @access  public
      * @author  Jason Lotito <jason@lehighweb.com>
+     * @uses    Image_Color::$color1 as an input and return value.
+     * @uses    Image_Color::$color2 as an input and return value.
      */
     function changeLightness($degree = 10)
     {
@@ -227,15 +236,20 @@ class Image_Color
     }
 
     /**
-     * Given a color, determing return whether you should use a dark or light
-     * font. You can change the dark and the light colors from their default
-     * black and white. This is determined by the G(reen) value of RGB.
+     * Determine if a light or dark text color would be more readable on a
+     * background of a given color. This is determined by the G(reen) value of
+     * RGB. You can change the dark and the light colors from their default
+     * black and white.
      *
+     * @param   string  $color The hex color to analyze
+     * @param   string  $light The light color value to return if we should
+     *                  have light text.
+     * @param   string  $dark The dark color value to return if we should have
+     *                  dark text.
+     * @return  string  The light or dark value which would make the text most
+     *                  readable.
      * @access  public
-     * @param   string  $color The color to analyze
-     * @param   string  $light The light color value to return if we should have light text
-     * @param   string  $dark The dark color value to return if we should have dark text
-     * @return  string  The light or dark value on which would be more readable.
+     * @static
      * @author  Jason Lotito <jason@lehighweb.com>
      */
     function getTextColor($color, $light = '#FFFFFF', $dark = '#000000')
@@ -248,28 +262,34 @@ class Image_Color
         }
     }
 
+
     /**
      * Internal method to set the colors.
      *
+     * @param   string  $col1 First color, either a name or hex value
+     * @param   string  $col2 Second color, either a name or hex value
+     * @return  void
      * @access  private
-     * @param   string  $col1 Color 1
-     * @param   string  $col2 Color 2
      * @author  Jason Lotito <jason@lehighweb.com>
      */
     function _setColors($col1, $col2)
     {
-        $this->color1 = Image_Color::_splitColor($col1);
-        $this->color2 = Image_Color::_splitColor($col2);
+        if ($col1) {
+            $this->color1 = Image_Color::_splitColor($col1);
+        }
+        if ($col2) {
+            $this->color2 = Image_Color::_splitColor($col2);
+        }
     }
 
     /**
      * Given a color, properly split it up into a 3 element RGB array.
      *
-     * @access  private
      * @param   string  $color The color.
-     * @return  array   3 element RGB array.
-     * @author  Jason Lotito <jason@lehighweb.com>
+     * @return  array   A three element RGB array.
+     * @access  private
      * @static
+     * @author  Jason Lotito <jason@lehighweb.com>
      */
     function _splitColor($color)
     {
@@ -282,22 +302,24 @@ class Image_Color
 
     /**
      * This is deprecated. Use rgb2hex() instead.
-     * @access    private
+     * @access  private
      * @deprecated Function deprecated after 1.0.1
+     * @see     rgb2hex().
      */
     function _returnColor ( $color )
     {
         return Image_Color::rgb2hex($color);
     }
-    
+
     /**
      * Convert an RGB array to a hex string.
      *
-     * @access  public
      * @param   array   $color 3 element RGB array.
-     * @return  string  Hex RGB string
-     * @author  Jason Lotito <jason@lehighweb.com>
+     * @return  string  Hex color string.
+     * @access  public
      * @static
+     * @author  Jason Lotito <jason@lehighweb.com>
+     * @see     hex2rgb()
      */
     function rgb2hex($color)
     {
@@ -305,15 +327,16 @@ class Image_Color
     }
 
     /**
-     * Convert a hex color string int an RGB array. An extra fourth element will
-     * be returned with the original hex value.
+     * Convert a hex color string into an RGB array. An extra fourth element
+     * will be returned with the original hex value.
      *
-     * @access  public
-     * @param   string  $hex The HEX string of the color.
+     * @param   string  $hex Hex color string.
      * @return  array   RGB color array with an extra 'hex' element containing
      *          the original hex string.
-     * @author  Jason Lotito <jason@lehighweb.com>
+     * @access  public
      * @static
+     * @author  Jason Lotito <jason@lehighweb.com>
+     * @see     rgb2hex()
      */
     function hex2rgb($hex)
     {
@@ -325,15 +348,15 @@ class Image_Color
     /**
      * Convert an HSV (Hue, Saturation, Brightness) value to RGB.
      *
-     * @access  public
      * @param   integer $h Hue
      * @param   integer $s Saturation
      * @param   integer $v Brightness
-     * @return  string  The RGB value.
-     * @uses    hsv2hex() to convert the HSV value to Hex
-     * @uses    hex2rgb() to convert the Hex value to RGB
-     * @author  Jason Lotito <jason@lehighweb.com>
+     * @return  array   RGB array.
+     * @access  public
      * @static
+     * @author  Jason Lotito <jason@lehighweb.com>
+     * @uses    hsv2hex() to convert the HSV value to Hex.
+     * @uses    hex2rgb() to convert the Hex value to RGB.
      */
     function hsv2rgb($h, $s, $v)
     {
@@ -341,17 +364,19 @@ class Image_Color
     }
 
     /**
-     * Convert an HSV (Hue, Saturation, Brightness) array to a hex color string.
+     * Convert HSV (Hue, Saturation, Brightness) to a hex color string.
      *
-     * Originally written by @author.  Integrated into Class by Jason Lotito.
+     * Originally written by Jurgen Schwietering. Integrated into the class by
+     * Jason Lotito.
      *
-     * @access  public
      * @param   integer $h Hue
      * @param   integer $s Saturation
      * @param   integer $v Brightness
-     * @return  string  The hex value.
-     * @author  Jurgen Schwietering <jurgen@schwietering.com>
+     * @return  string  The hex string.
+     * @access  public
      * @static
+     * @author  Jurgen Schwietering <jurgen@schwietering.com>
+     * @uses    rgb2hex() to convert the return value to a hex string.
      */
     function hsv2hex($h, $s, $v)
     {
@@ -361,7 +386,7 @@ class Image_Color
             $r = $g = $b = $v;
             return '';
         } else {
-            $h = $h/256.0*6.0;
+            $h = $h / 256.0 * 6.0;
             $i = floor($h);
             $f = $h - $i;
 
@@ -413,16 +438,16 @@ class Image_Color
     /**
      * Allocates a color in the given image.
      *
-     * Userdefined color specifications get translated into
-     * an array of rgb values.
+     * User defined color specifications get translated into an array of RGB
+     * values.
      *
-     * @access  public
      * @param   resource        $img Image handle
      * @param   string|array    $color Name or hex string or an RGB array.
-     * @return  resource    Image color handle
-     * @uses    color2RGB() to convert the color to RGB values
-     * @uses    ImageColorAllocate() to allocate the color
+     * @return  resource        Image color handle.
+     * @access  public
      * @static
+     * @uses    ImageColorAllocate() to allocate the color.
+     * @uses    color2RGB() to parse the color into RGB values.
      */
     function allocateColor(&$img, $color) {
         $color = Image_Color::color2RGB($color);
@@ -431,13 +456,18 @@ class Image_Color
     }
 
     /**
-     * Convert a named or hex color string to an RGB array.
+     * Convert a named or hex color string to an RGB array. If the color begins
+     * with the # character it will be treated as a hex value. Everything else
+     * will be treated as a named color. If the named color is not known, black
+     * will be returned.
      *
-     * @access  public
      * @param   string  $color
      * @return  array   RGB color
+     * @access  public
      * @static
      * @author  Laurent Laville <pear@laurent-laville.org>
+     * @uses    hex2rgb() to convert colors begining with the # character.
+     * @uses    namedColor2RGB() to convert everything not starting with a #.
      */
     function color2RGB($color)
     {
@@ -453,20 +483,18 @@ class Image_Color
     }
 
     /**
-     * Returns the RGB interger values of a named color, or black (0,0,0) if it
-     * is unknown.
+     * Convert a named color to an RGB array. If the color is unknown black
+     * is returned.
      *
-     * The static variable $colornames is used to resolve the color names.
-     * Modify it if neccessary.
-     *
-     * @param   string  Case insensitive color name.
+     * @param   string  $color Case insensitive color name.
      * @return  array   RGB color array. If the color was unknown, the result
      *          will be black.
      * @access  public
      * @static
      * @author  Sebastian Bergmann <sb@sebastian-bergmann.de>
      */
-    function namedColor2RGB($color) {
+    function namedColor2RGB($color)
+    {
         static $colornames;
 
         if (!isset($colornames)) {
@@ -624,72 +652,68 @@ class Image_Color
     }
 
     /**
-     * Returns the RGB integer values of a color specified by a "percentage
-     * string" like "50%,20%,100%".
+     * Convert an RGB percentage string into an RGB array.
      *
-     * @access  public
-     * @param   string  $color
+     * @param   string  $color Percentage color string like "50%,20%,100%".
      * @return  array   RGB color array.
+     * @access  public
      * @static
      */
-    function percentageColor2RGB($color) {
-        // split the string 50%,20%,100% by ,
-        $color = explode(",", $color);
+    function percentageColor2RGB($color)
+    {
+        // remove spaces
+        $color = str_replace(' ', '', $color);
+        // remove the percent signs
+        $color = str_replace('%', '', $color);
+        // split the string by commas
+        $color = explode(',', $color);
 
+        $ret = array();
         foreach ($color as $k => $v) {
-            // remove the trailing percentage sign %
-            $v = (int) substr($v, 1);
-
             // range checks
-            if ($v >= 100) {
-                $color[$k] = 255;
-            } else if ($v <= 0) {
-                $color[$k] = 0;
+            if ($v <= 0) {
+                $ret[$k] = 0;
+            } else if ($v <= 100) {
+                // add 0.5 then cast to an integer to round the value.
+                $ret[$k] = (integer) ((2.55 * $v) + 0.5);
             } else {
-                $color[$k] = (int)(2.55 * $v);
+                $ret[$k] = 255;
             }
         }
 
-        return $color;
+        return $ret;
     }
 }
 
 // For Array Walk
 // {{{
-    /**
-     * Function for array_walk() to easily change colors from whatever to
-     * the closests websafe representation.
-     *
-     * @access  private
-     * @param   integer $color One channel of an RGB color.
-     * @return  integer The websafe equivalent of the color channel.
-     * @author  Jason Lotito <jason@lehighweb.com>
-     * @author  Andrew Morton <drewish@katherinehouse.com>
-     * @static
-     */
-    function _makeWebSafe(&$color)
-    {
-        if ($color < 0x1a) {
-            $color = 0x00;
-        } else if ($color < 0x4d) {
-            $color = 0x33;
-        } else if ($color < 0x80) {
-            $color = 0x66;
-        } else if ($color < 0xB3) {
-            $color = 0x99;
-        } else if ($color < 0xE6) {
-            $color = 0xCC;
-        } else {
-            $color = 0xFF;
-        }
-        return $color;
+/**
+ * Function for array_walk() to round colors to the closest web safe value.
+ *
+ * @param   integer $color One channel of an RGB color.
+ * @return  integer The websafe equivalent of the color channel.
+ * @author  Jason Lotito <jason@lehighweb.com>
+ * @author  Andrew Morton <drewish@katherinehouse.com>
+ * @access  private
+ * @static
+ */
+function _makeWebSafe(&$color)
+{
+    if ($color < 0x1a) {
+        $color = 0x00;
+    } else if ($color < 0x4d) {
+        $color = 0x33;
+    } else if ($color < 0x80) {
+        $color = 0x66;
+    } else if ($color < 0xB3) {
+        $color = 0x99;
+    } else if ($color < 0xE6) {
+        $color = 0xCC;
+    } else {
+        $color = 0xFF;
     }
+    return $color;
+}
 // }}}
 
-/*
-* Local variables:
-* tab-width: 4
-* c-basic-offset: 4
-* End:
-*/
 ?>
