@@ -3,6 +3,9 @@
 /**
  * Image_Color Tests
  *
+ * I was pretty dumb when i set this up. It uses PHPUnit2 which is PHP5 only.
+ * I need to convert it back to PHPUnit so I can test this under PHP4.
+ *
  * @version $Id$
  * @copyright 2005
  */
@@ -32,6 +35,43 @@ class Color extends PHPUnit2_Framework_TestCase {
         $this->assertTrue($this->color->_websafeb, 'setting true failed.');
         $this->color->setWebSafe(false);
         $this->assertFalse($this->color->_websafeb, 'setting false failed.');
+    }
+
+    function testGetGetRange_DefaultParam() {
+        $this->color->setColors('#ffffff', '#000000');
+        $result = $this->color->getRange();
+        $this->assertType('array', $result);
+        $this->assertEquals(2, count($result));
+    }
+    function testGetGetRange_Param5() {
+        $this->color->setColors('#ffffff', '#000000');
+        $result = $this->color->getRange(5);
+        $this->assertType('array', $result);
+        $this->assertEquals(5, count($result));
+    }
+
+    function testChangeLightness_DefaultParam_SingleColor() {
+        $color = array(128,128,128);
+        $this->color->setColors(Image_Color::rgb2hex($color));
+        $this->color->changeLightness();
+        $this->assertEquals(array(138,138,138), $this->color->color1);
+    }
+    function testChangeLightness_NegativeParam_SingleColor() {
+        $color = array(128,128,128);
+        $this->color->setColors(Image_Color::rgb2hex($color));
+        $this->color->changeLightness(-5);
+        $this->assertEquals(array(123,123,123), $this->color->color1);
+    }
+    function testChangeLightness_NegativeParam_TwoColors() {
+        $color1 = array(128,128,128);
+        $color2 = array(64,64,64);
+        $this->color->setColors(
+            Image_Color::rgb2hex($color1),
+            Image_Color::rgb2hex($color2)
+        );
+        $this->color->changeLightness(-32);
+        $this->assertEquals(array(96,96,96), $this->color->color1);
+        $this->assertEquals(array(32,32,32), $this->color->color2);
     }
 
 
@@ -135,11 +175,11 @@ class Color extends PHPUnit2_Framework_TestCase {
         $this->assertEquals('#FFFFFF', $result);
     }
     function testGetTextColor_DefaultParams_OnDarkGreen() {
-        $result = Image_Color::getTextColor('darkgreen');
+        $result = Image_Color::getTextColor('#006400');
         $this->assertEquals('#FFFFFF', $result);
     }
     function testGetTextColor_DefaultParams_OnLightGreen() {
-        $result = Image_Color::getTextColor('lightgreen');
+        $result = Image_Color::getTextColor('90ee90');
         $this->assertEquals('#000000', $result);
     }
 
