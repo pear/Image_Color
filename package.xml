@@ -27,7 +27,7 @@
   <license>PHP License</license>
   <release>
     <version>1.0.2</version>
-    <state>beta</state>
+    <state>stable</state>
     <date>2005-09-11</date>
     <notes>
 * FIXED: percentageColor2RGB() was dropping first character of each number
