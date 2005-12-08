@@ -28,14 +28,14 @@
   <release>
     <version>1.0.2</version>
     <state>stable</state>
-    <date>2005-09-11</date>
+    <date>2005-09-12</date>
     <notes>
 * FIXED: percentageColor2RGB() was dropping first character of each number
   instead of the percent sign at the end.
 * FIXED: mixColors() and percentageColor2RGB() weren't rounding the values
   correctly. 50% of 255 is 127.5 and should round to 128 instead of 127.
 * FIXED: setColors(). If the second parameter was omitted it would take on a
-  random-ish value. I changed the implementation of so that colors are only set
+  random-ish value. I changed the implementation so that colors are only set
   when they're provided.
 * FIXED: _makeWebSafe() was rounding values incorrectly. Significantly
   simplified the implementation in the process.
