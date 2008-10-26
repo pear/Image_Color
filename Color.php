@@ -213,24 +213,28 @@ class Image_Color
         $color2 =& $this->color2;
 
         for ($x = 0; $x < 3; $x++) {
-            if (($color1[$x] + $degree) < 256) {
-                if (($color1[$x] + $degree) > -1) {
-                    $color1[$x] += $degree;
+            if (isset($color1[$x])) {
+                if (($color1[$x] + $degree) < 256) {
+                    if (($color1[$x] + $degree) > -1) {
+                        $color1[$x] += $degree;
+                    } else {
+                        $color1[$x] = 0;
+                    }
                 } else {
-                    $color1[$x] = 0;
+                    $color1[$x] = 255;
                 }
-            } else {
-                $color1[$x] = 255;
             }
 
-            if (($color2[$x] + $degree) < 256) {
-                if (($color2[$x] + $degree) > -1) {
-                    $color2[$x] += $degree;
+            if (isset($color2[$x])) {
+                if (($color2[$x] + $degree) < 256) {
+                    if (($color2[$x] + $degree) > -1) {
+                        $color2[$x] += $degree;
+                    } else {
+                        $color2[$x] = 0;
+                    }
                 } else {
-                    $color2[$x] = 0;
+                    $color2[$x] = 255;
                 }
-            } else {
-                $color2[$x] = 255;
             }
         }
     }
