@@ -432,7 +432,7 @@ class Image_Color
                     break;
             }
         }
-        return $this->rgb2hex(array($r, $g, $b));
+        return Image_Color::rgb2hex(array($r, $g, $b));
     }
 
     /**
