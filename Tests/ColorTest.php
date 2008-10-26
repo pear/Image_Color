@@ -49,13 +49,13 @@ class ColorTest extends PHPUnit_Framework_TestCase {
 
     function testChangeLightness_DefaultParam_SingleColor() {
         $color = array(128,128,128);
-        $this->color->setColors(Image_Color::rgb2hex($color));
+        $this->color->setColors(Image_Color::rgb2hex($color), null);
         $this->color->changeLightness();
         $this->assertEquals(array(138,138,138), $this->color->color1);
     }
     function testChangeLightness_NegativeParam_SingleColor() {
         $color = array(128,128,128);
-        $this->color->setColors(Image_Color::rgb2hex($color));
+        $this->color->setColors(Image_Color::rgb2hex($color), null);
         $this->color->changeLightness(-5);
         $this->assertEquals(array(123,123,123), $this->color->color1);
     }
@@ -115,12 +115,12 @@ class ColorTest extends PHPUnit_Framework_TestCase {
 
 
     function testSetColors_Neither() {
-        $this->color->setColors();
+        $this->color->setColors(null, null);
         $this->assertEquals(array(), $this->color->color1);
         $this->assertEquals(array(), $this->color->color2);
     }
     function testSetColors_OnlyOne_Hex() {
-        $this->color->setColors('ABCDEF');
+        $this->color->setColors('ABCDEF', null);
         $this->assertEquals(array(171, 205, 239), $this->color->color1);
         $this->assertEquals(array(), $this->color->color2);
     }
