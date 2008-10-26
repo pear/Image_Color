@@ -3,17 +3,14 @@
 /**
  * Image_Color Tests
  *
- * I was pretty dumb when i set this up. It uses PHPUnit2 which is PHP5 only.
- * I need to convert it back to PHPUnit so I can test this under PHP4.
- *
  * @version $Id$
  * @copyright 2005
  */
 
-require_once 'PHPUnit2/Framework/TestCase.php';
-require_once '../Color.php';
+require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'Color.php';
 
-class Color extends PHPUnit2_Framework_TestCase {
+class ColorTest extends PHPUnit_Framework_TestCase {
     var $color;
 
 
