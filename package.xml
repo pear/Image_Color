@@ -1,119 +1,169 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
-<package version="1.0">
-  <name>Image_Color</name>
-  <summary>Manage and handles color data and conversions.</summary>
-  <description>Manage and handles color data and conversions.</description>
-  <maintainers>
-    <maintainer>
-      <user>drewish</user>
-      <role>lead</role>
-      <name>Andrew Morton</name>
-      <email>drewish@php.net</email>
-    </maintainer>
-    <maintainer>
-      <user>jasonlotito</user>
-      <role>lead</role>
-      <name>Jason Lotito</name>
-      <email>jason@lehighweb.com</email>
-    </maintainer>
-    <maintainer>
-      <user>uw</user>
-      <role>developer</role>
-      <name>Ulf Wendel</name>
-      <email>ulf.wendel@phpdoc.de</email>
-    </maintainer>
-  </maintainers>
-  <license>PHP License</license>
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.7.2" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>Image_Color</name>
+ <channel>pear.php.net</channel>
+ <summary>Manage and handles color data and conversions.</summary>
+ <description>Manage and handles color data and conversions.</description>
+ <lead>
+  <name>Andrew Morton</name>
+  <user>drewish</user>
+  <email>drewish@php.net</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Jason Lotito</name>
+  <user>jasonlotito</user>
+  <email>jason@lehighweb.com</email>
+  <active>yes</active>
+ </lead>
+ <developer>
+  <name>Ulf Wendel</name>
+  <user>uw</user>
+  <email>ulf.wendel@phpdoc.de</email>
+  <active>yes</active>
+ </developer>
+ <date>2008-12-28</date>
+ <time>11:14:56</time>
+ <version>
+  <release>1.0.3</release>
+  <api>1.0.3</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.php.net/license">PHP License</license>
+ <notes>Bug #5828  - &apos;gd&apos; PHP extension is not installed
+Bug #11795 - Unit Tests will not work without deprecated phpunit
+Bug #14460 - Reference to $this in static function
+Bug #14887 - E_NOTICE when setColors() and changeLightness() called</notes>
+ <contents>
+  <dir baseinstalldir="Image" name="/">
+   <file baseinstalldir="Image" md5sum="75c3260551509a1fe1e915e06b914481" name="Tests/AllTests.php" role="php" />
+   <file baseinstalldir="Image" md5sum="389c52a0218d75d4965dd1768974b3a9" name="Tests/ColorTest.php" role="php" />
+   <file baseinstalldir="Image" md5sum="437e3434e7dfff45534911a86b250dbd" name="Color.php" role="php" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>4.0.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+   <extension>
+    <name>gd</name>
+   </extension>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
   <release>
-    <version>1.0.2</version>
-    <state>stable</state>
-    <date>2005-09-12</date>
-    <notes>
-* FIXED: percentageColor2RGB() was dropping first character of each number
-  instead of the percent sign at the end.
-* FIXED: mixColors() and percentageColor2RGB() weren't rounding the values
-  correctly. 50% of 255 is 127.5 and should round to 128 instead of 127.
-* FIXED: setColors(). If the second parameter was omitted it would take on a
-  random-ish value. I changed the implementation so that colors are only set
-  when they're provided.
-* FIXED: _makeWebSafe() was rounding values incorrectly. Significantly
-  simplified the implementation in the process.
-* Removed the private, unused Image_Color::$websafe member.
-* Marked Image_Color::$color1 and $color2 as public. It made no sense that they
-  were private considering that if you called changeLightness() the only way to
-  find the result was using $color1 and $color2.
-* Deprecated the _returnColor() function. All it was doing was converting RGB
-  arrays to hex strings. The more aptly named rgb2hex() was calling
-  _returnColor() which made no sense. _returnColor() now calls rgb2hex() and
-  will probably disappear after the next release.
-* Made major improvements to the comments and documentation and corrected
-  several violations of the PEAR coding standards.
-    </notes>
-    <filelist>
-      <dir name="/" baseinstalldir="Image">
-        <file role="php" name="Color.php" />
-      </dir>
-    </filelist>
-    <deps>
-      <dep type="ext" rel="has">gd</dep>
-    </deps>
+   <version>
+    <release>0.2</release>
+    <api>0.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2002-03-14</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>Added support for HSV2RGB and HSV2HEX - Thanks to Jurgen Schwietering</notes>
   </release>
-  <changelog>
-    <release>
-      <version>1.0.1</version>
-      <date>2004-05-25</date>
-      <state>stable</state>
-      <notes>
-<![CDATA[
-* Removed newline at end of file.
-]]>
-      </notes>
-    </release>
-    <release>
-      <version>1.0.0</version>
-      <date>2004-04-17</date>
-      <notes>
-<![CDATA[
-+ Added color2RGB() method.
-
-  (Contribution by Laurent Laville <pear@laurent-laville.org>)
-
-* allocateColor() now works with both color names and
-  hex color codes.
-]]>
-      </notes>
-    </release>
-    <release>
-      <version>0.4</version>
-      <date>2003-01-02</date>
-      <notes>
-<![CDATA[
-* Made namedColor2RGB() method static.
-]]>
-      </notes>
-    </release>
-    <release>
-      <version>0.3</version>
-      <date>2002-04-08</date>
-      <notes>
-<![CDATA[
-* First independent PEAR release.
+  <release>
+   <version>
+    <release>0.3</release>
+    <api>0.3</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2002-04-08</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>* First independent PEAR release.
 
 * Renamed RGB(.php) to Color(.php).
 
-* Merged in functionality from Experimental/Color_Helper.
-]]>
-      </notes>
-    </release>
-    <release>
-      <version>0.2</version>
-      <date>2002-03-14</date>
-      <notes>
-<![CDATA[
-Added support for HSV2RGB and HSV2HEX - Thanks to Jurgen Schwietering
-]]>
-      </notes>
-    </release>
-  </changelog>
+* Merged in functionality from Experimental/Color_Helper.</notes>
+  </release>
+  <release>
+   <version>
+    <release>0.4</release>
+    <api>0.4</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2003-01-02</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>* Made namedColor2RGB() method static.</notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.0</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2004-04-17</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>+ Added color2RGB() method.
+
+  (Contribution by Laurent Laville &lt;pear@laurent-laville.org&gt;)
+
+* allocateColor() now works with both color names and
+  hex color codes.</notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.1</release>
+    <api>1.0.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2004-05-25</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>* Removed newline at end of file.</notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.2</release>
+    <api>1.0.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2008-12-28</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>Bug #5828  - &apos;gd&apos; PHP extension is not installed
+Bug #11795 - Unit Tests will not work without deprecated phpunit
+Bug #14460 - Reference to $this in static function
+Bug #14887 - E_NOTICE when setColors() and changeLightness() called</notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.3</release>
+    <api>1.0.3</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2008-12-28</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>Bug #5828  - &apos;gd&apos; PHP extension is not installed
+Bug #11795 - Unit Tests will not work without deprecated phpunit
+Bug #14460 - Reference to $this in static function
+Bug #14887 - E_NOTICE when setColors() and changeLightness() called</notes>
+  </release>
+ </changelog>
 </package>
