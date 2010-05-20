@@ -33,7 +33,6 @@
   <api>stable</api>
  </stability>
  <license uri="http://www.php.net/license">PHP License</license>
- <license uri="http://www.gnu.org/licenses/lgpl-2.1.html">LGPL 2.1 License</license>
  <notes>
 Relicensing under LGPL 2.1.
  </notes>
