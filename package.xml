@@ -33,8 +33,9 @@
   <api>stable</api>
  </stability>
  <license uri="http://www.php.net/license">PHP License</license>
+ <license uri="http://www.gnu.org/licenses/lgpl-2.1.html">LGPL 2.1 License</license>
  <notes>
-
+Relicensing under LGPL 2.1.
  </notes>
  <contents>
   <dir baseinstalldir="Image" name="/">
@@ -173,7 +174,6 @@ Bug #14887 - E_NOTICE when setColors() and changeLightness() called
    </stability>
    <date>2008-12-28</date>
    <license uri="http://www.php.net/license">PHP License</license>
-   <license uri="http://www.gnu.org/licenses/lgpl-2.1.html">LGPL 2.1 License</license>
    <notes>
 Bug #5828  - &apos;gd&apos; PHP extension is not installed
 Bug #11795 - Unit Tests will not work without deprecated phpunit
