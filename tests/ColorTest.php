@@ -37,13 +37,13 @@ class ColorTest extends PHPUnit_Framework_TestCase {
     function testGetGetRange_DefaultParam() {
         $this->color->setColors('#ffffff', '#000000');
         $result = $this->color->getRange();
-        $this->assertType('array', $result);
+        $this->assertInternalType('array', $result);
         $this->assertEquals(2, count($result));
     }
     function testGetGetRange_Param5() {
         $this->color->setColors('#ffffff', '#000000');
         $result = $this->color->getRange(5);
-        $this->assertType('array', $result);
+        $this->assertInternalType('array', $result);
         $this->assertEquals(5, count($result));
     }
 
