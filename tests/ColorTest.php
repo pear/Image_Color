@@ -8,7 +8,7 @@
  */
 
 require_once 'PHPUnit/Framework/TestCase.php';
-require_once 'Color.php';
+require_once 'Image/Color.php';
 
 class ColorTest extends PHPUnit_Framework_TestCase {
     var $color;
