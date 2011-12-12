@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+<package packagerversion="1.9.4" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
  <name>Image_Color</name>
  <channel>pear.php.net</channel>
  <summary>Manage and handles color data and conversions.</summary>
@@ -22,10 +22,10 @@
   <email>ulf.wendel@phpdoc.de</email>
   <active>no</active>
  </developer>
- <date>2010-05-20</date>
- <time>17:28:23</time>
+ <date>2011-12-13</date>
+ <time>08:21:26</time>
  <version>
-  <release>1.0.4</release>
+  <release>1.0.5</release>
   <api>1.0.3</api>
  </version>
  <stability>
@@ -34,16 +34,16 @@
  </stability>
  <license uri="http://www.php.net/license">PHP License</license>
  <notes>
-Relicensing under LGPL 2.1.
+QA Release
+Fix dir structure
  </notes>
  <contents>
-  <dir baseinstalldir="Image" name="/">
-   <dir name="Tests">
-    <file baseinstalldir="Image" name="AllTests.php" role="php" />
-    <file baseinstalldir="Image" name="ColorTest.php" role="php" />
-   </dir> <!-- //Tests -->
-   <file baseinstalldir="Image" name="Color.php" role="php" />
-  </dir> <!-- / -->
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="/" md5sum="b585dd216ae0d49b5db73193bb18d1aa" name="/Image/Color.php" role="php" />
+   <file baseinstalldir="/" md5sum="0b920a78c4d2dfe149046c9f1b39fe78" name="/tests/AllTests.php" role="php" />
+   <file baseinstalldir="/" md5sum="885cfef95a516203992eb5b55aa6ef76" name="/tests/ColorTest.php" role="php" />
+   <file baseinstalldir="/" md5sum="77817ffa40058270728fbaf274499748" name="README" role="data" />
+  </dir>
  </contents>
  <dependencies>
   <required>
@@ -178,6 +178,22 @@ Bug #5828  - &apos;gd&apos; PHP extension is not installed
 Bug #11795 - Unit Tests will not work without deprecated phpunit
 Bug #14460 - Reference to $this in static function
 Bug #14887 - E_NOTICE when setColors() and changeLightness() called
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.5</release>
+    <api>1.0.3</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2011-12-13</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>
+QA Release
+Fix dir structure
    </notes>
   </release>
  </changelog>
