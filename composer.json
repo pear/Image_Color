@@ -1,0 +1,41 @@
+{
+    "authors": [
+        {
+            "email": "jasonlotito@gmail.com",
+            "name": "Jason Lotito",
+            "role": "Lead"
+        },
+        {
+            "email": "drewish@katherinehouse.com",
+            "name": "Andrew Morton",
+            "role": "Lead"
+        },
+        {
+            "email": "ulf.wendel@phpdoc.de",
+            "name": "Ulf Wendel",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Image_Color": "./"
+        }
+    },
+    "description": "More info available on: http://pear.php.net/package/Image_Color",
+    "include-path": [
+        "./"
+    ],
+    "license": "PHP License",
+    "name": "pear/image_color",
+    "support": {
+        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=Image_Color",
+        "source": "https://github.com/pear/Image_Color"
+    },
+    "type": "library",
+    "require": {
+        "pear/pear_exception": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    }
+}
