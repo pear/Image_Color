@@ -25,7 +25,7 @@
     "include-path": [
         "./"
     ],
-    "license": "PHP License",
+    "license": "PHP-3.01",
     "name": "pear/image_color",
     "support": {
         "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=Image_Color",
