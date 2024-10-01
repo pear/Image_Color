@@ -33,6 +33,6 @@
     },
     "type": "library",
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "yoast/phpunit-polyfills": "^2.0"
     }
 }
