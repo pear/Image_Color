@@ -470,7 +470,7 @@ class Image_Color
      * @uses    ImageColorAllocate() to allocate the color.
      * @uses    color2RGB() to parse the color into RGB values.
      */
-    function allocateColor(&$img, $color) {
+    static function allocateColor(&$img, $color) {
         $color = Image_Color::color2RGB($color);
 
         return ImageColorAllocate($img, $color[0], $color[1], $color[2]);
