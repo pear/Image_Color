@@ -7,17 +7,23 @@
  * @copyright 2005
  */
 
-require_once 'PHPUnit/Framework/TestCase.php';
+// As we want to run on PHP < 7.1,
+// we can't use return type declaration in fixtures.
+// Therefore we use PHPUnitPolyFills snakecase fixtures set_up/tear_down
+// instead of setUp/tearDown.
+// See https://github.com/Yoast/PHPUnit-Polyfills?tab=readme-ov-file#option-1-yoastphpunitpolyfillstestcasestestcase
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 require_once 'Image/Color.php';
 
-class ColorTest extends PHPUnit_Framework_TestCase {
+class ColorTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase {
     var $color;
 
 
-    function setUp() {
+    function set_up() {
         $this->color = new Image_Color();
     }
-    function tearDown() {
+    function tear_down() {
         unset($this->color);
     }
 
@@ -37,13 +43,13 @@ class ColorTest extends PHPUnit_Framework_TestCase {
     function testGetGetRange_DefaultParam() {
         $this->color->setColors('#ffffff', '#000000');
         $result = $this->color->getRange();
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertEquals(2, count($result));
     }
     function testGetGetRange_Param5() {
         $this->color->setColors('#ffffff', '#000000');
         $result = $this->color->getRange(5);
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertEquals(5, count($result));
     }
 

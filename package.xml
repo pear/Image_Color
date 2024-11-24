@@ -39,7 +39,6 @@ Add to Packagist
  <contents>
   <dir baseinstalldir="/" name="/">
    <file baseinstalldir="/" md5sum="b585dd216ae0d49b5db73193bb18d1aa" name="/Image/Color.php" role="php" />
-   <file baseinstalldir="/" md5sum="0b920a78c4d2dfe149046c9f1b39fe78" name="/tests/AllTests.php" role="php" />
    <file baseinstalldir="/" md5sum="885cfef95a516203992eb5b55aa6ef76" name="/tests/ColorTest.php" role="php" />
    <file baseinstalldir="/" md5sum="77817ffa40058270728fbaf274499748" name="README" role="data" />
   </dir>
