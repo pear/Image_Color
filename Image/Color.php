@@ -273,7 +273,7 @@ class Image_Color
      * @static
      * @author  Jason Lotito <jason@lehighweb.com>
      */
-    function getTextColor($color, $light = '#FFFFFF', $dark = '#000000')
+    static function getTextColor($color, $light = '#FFFFFF', $dark = '#000000')
     {
         $color = Image_Color::_splitColor($color);
         if ($color[1] > hexdec('66')) {
@@ -312,7 +312,7 @@ class Image_Color
      * @static
      * @author  Jason Lotito <jason@lehighweb.com>
      */
-    function _splitColor($color)
+    static function _splitColor($color)
     {
         $color = str_replace('#', '', $color);
         $c[] = hexdec(substr($color, 0, 2));
@@ -327,7 +327,7 @@ class Image_Color
      * @deprecated Function deprecated after 1.0.1
      * @see     rgb2hex().
      */
-    function _returnColor ( $color )
+    static function _returnColor ( $color )
     {
         return Image_Color::rgb2hex($color);
     }
@@ -342,7 +342,7 @@ class Image_Color
      * @author  Jason Lotito <jason@lehighweb.com>
      * @see     hex2rgb()
      */
-    function rgb2hex($color)
+    static function rgb2hex($color)
     {
         return sprintf('%02X%02X%02X',$color[0],$color[1],$color[2]);
     }
@@ -359,7 +359,7 @@ class Image_Color
      * @author  Jason Lotito <jason@lehighweb.com>
      * @see     rgb2hex()
      */
-    function hex2rgb($hex)
+    static function hex2rgb($hex)
     {
         $return = Image_Color::_splitColor($hex);
         $return['hex'] = $hex;
@@ -379,7 +379,7 @@ class Image_Color
      * @uses    hsv2hex() to convert the HSV value to Hex.
      * @uses    hex2rgb() to convert the Hex value to RGB.
      */
-    function hsv2rgb($h, $s, $v)
+    static function hsv2rgb($h, $s, $v)
     {
         return Image_Color::hex2rgb(Image_Color::hsv2hex($h, $s, $v));
     }
@@ -399,7 +399,7 @@ class Image_Color
      * @author  Jurgen Schwietering <jurgen@schwietering.com>
      * @uses    rgb2hex() to convert the return value to a hex string.
      */
-    function hsv2hex($h, $s, $v)
+    static function hsv2hex($h, $s, $v)
     {
         $s /= 256.0;
         $v /= 256.0;
@@ -470,7 +470,7 @@ class Image_Color
      * @uses    ImageColorAllocate() to allocate the color.
      * @uses    color2RGB() to parse the color into RGB values.
      */
-    function allocateColor(&$img, $color) {
+    static function allocateColor(&$img, $color) {
         $color = Image_Color::color2RGB($color);
 
         return ImageColorAllocate($img, $color[0], $color[1], $color[2]);
@@ -490,11 +490,11 @@ class Image_Color
      * @uses    hex2rgb() to convert colors begining with the # character.
      * @uses    namedColor2RGB() to convert everything not starting with a #.
      */
-    function color2RGB($color)
+    static function color2RGB($color)
     {
         $c = array();
 
-        if ($color{0} == '#') {
+        if ($color[0] == '#') {
             $c = Image_Color::hex2rgb($color);
         } else {
             $c = Image_Color::namedColor2RGB($color);
@@ -514,7 +514,7 @@ class Image_Color
      * @static
      * @author  Sebastian Bergmann <sb@sebastian-bergmann.de>
      */
-    function namedColor2RGB($color)
+    static function namedColor2RGB($color)
     {
         static $colornames;
 
@@ -680,7 +680,7 @@ class Image_Color
      * @access  public
      * @static
      */
-    function percentageColor2RGB($color)
+    static function percentageColor2RGB($color)
     {
         // remove spaces
         $color = str_replace(' ', '', $color);
